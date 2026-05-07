@@ -7,6 +7,12 @@
 (function () {
   const STORAGE_PREFIX = 'cover-bg:';
 
+  // Embed mode: when this page is loaded inside an iframe (e.g. index thumbnails)
+  // with ?embed=1 query, hide the export toolbar + chrome so the preview is clean.
+  if (location.search.includes('embed')) {
+    document.body.dataset.embed = '1';
+  }
+
   function getKey() {
     return STORAGE_PREFIX + (document.body.dataset.outputName || 'default');
   }

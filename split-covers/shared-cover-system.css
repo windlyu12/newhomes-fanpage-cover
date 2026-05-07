@@ -675,6 +675,16 @@ body.split-cover-page {
   padding: 28px;
   background: #1A1714;
 }
+/* Embed mode (?embed=1, used by index thumbnails in iframes):
+   strip toolbar + page padding so only the cover frame shows. */
+body.split-cover-page[data-embed="1"] {
+  min-height: 0;
+  padding: 0;
+  gap: 0;
+  place-items: start;
+  background: transparent;
+}
+body.split-cover-page[data-embed="1"] .split-toolbar { display: none !important; }
 .split-toolbar {
   display: flex;
   gap: 10px;

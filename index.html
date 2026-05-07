@@ -11,11 +11,15 @@
   :root {
     --bg: #1A1714;
     --bg-card: #221d18;
+    --bg-card-hover: #2a231b;
     --ink: #FAF5EA;
     --ink-soft: rgba(250, 245, 234, 0.62);
+    --ink-mute: rgba(250, 245, 234, 0.38);
     --gold: #D9C28D;
     --gold-pale: #E8D5A6;
-    --rule: rgba(217, 194, 141, 0.18);
+    --gold-deep: #8A6A2B;
+    --rule: rgba(217, 194, 141, 0.16);
+    --rule-strong: rgba(217, 194, 141, 0.32);
   }
   * { box-sizing: border-box; }
   html, body {
@@ -24,16 +28,24 @@
     color: var(--ink);
     font-family: "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
   }
+  a { color: inherit; }
   .wrap {
-    max-width: 1080px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 60px 32px 80px;
+    padding: 56px 32px 96px;
   }
+
+  /* ==== HEADER ==== */
   header {
     border-bottom: 1px solid var(--rule);
-    padding-bottom: 32px;
+    padding-bottom: 36px;
     margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: end;
   }
   .kicker {
     font-family: "JetBrains Mono", monospace;
@@ -41,14 +53,15 @@
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   h1 {
     font-family: "Fraunces", serif;
     font-weight: 400;
-    font-size: 44px;
-    line-height: 1.15;
-    margin: 0 0 12px;
+    font-size: 48px;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
   }
   h1 em {
     font-style: italic;
@@ -56,70 +69,177 @@
   }
   .lede {
     font-size: 15px;
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--ink-soft);
-    max-width: 640px;
+    max-width: 540px;
+    margin: 0;
   }
-  h2 {
+  .quickstart {
     font-family: "JetBrains Mono", monospace;
     font-size: 11px;
+    letter-spacing: 0.10em;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    background: rgba(217, 194, 141, 0.05);
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--gold);
+    padding: 18px 20px;
+    border-radius: 4px;
+  }
+  .quickstart .step-num {
+    color: var(--gold);
+    margin-right: 8px;
+  }
+  .quickstart strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ==== SECTION HEADING ==== */
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--gold);
-    margin: 48px 0 18px;
-    padding-bottom: 10px;
+    margin: 56px 0 24px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--rule);
   }
+  h2 .count {
+    color: var(--ink-mute);
+    letter-spacing: 0.18em;
+  }
+
+  /* ==== GRID ==== */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 22px;
   }
+  .grid.wide {
+    grid-template-columns: 1fr;
+  }
+
+  /* ==== CARD ==== */
   .card {
-    display: block;
-    padding: 22px 22px 24px;
+    display: flex;
+    flex-direction: column;
     background: var(--bg-card);
     border: 1px solid var(--rule);
-    border-radius: 8px;
-    color: inherit;
+    border-radius: 10px;
+    overflow: hidden;
     text-decoration: none;
-    transition: border-color 0.18s, transform 0.18s;
+    color: inherit;
+    transition: border-color 0.18s, transform 0.18s, background 0.18s;
+    position: relative;
   }
   .card:hover {
     border-color: var(--gold);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    background: var(--bg-card-hover);
+  }
+  .card:hover .preview-badge {
+    opacity: 1;
+  }
+
+  /* iframe preview frame — true 1247×466 cover scaled to fit card width.
+     The aspect-ratio container reserves the right height; JS sets transform scale. */
+  .preview-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1247 / 466;
+    overflow: hidden;
+    background: #1A1714;
+    border-bottom: 1px solid var(--rule);
+  }
+  .preview-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1247px;
+    height: 466px;
+    border: 0;
+    pointer-events: none;
+    transform-origin: top left;
+    /* transform scale set via JS based on container width */
+  }
+  .preview-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    background: rgba(26, 23, 20, 0.78);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--rule-strong);
+    color: var(--gold-pale);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: opacity 0.18s;
+    pointer-events: none;
+  }
+
+  .card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
   }
   .num {
     font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.24em;
+    font-size: 10px;
+    letter-spacing: 0.28em;
     color: var(--gold);
-    margin-bottom: 10px;
+  }
+  .meta-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.20em;
+    color: var(--ink-mute);
   }
   .title {
     font-family: "Fraunces", serif;
-    font-size: 20px;
-    line-height: 1.3;
-    margin-bottom: 6px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 2px 0;
   }
   .desc {
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--ink-soft);
   }
-  .meta {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--rule);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    color: var(--ink-soft);
+
+  /* All-in-one canvas card — wider, single column */
+  .card.canvas .preview-frame {
+    aspect-ratio: 1247 / 466;
   }
+
+  /* ==== FOOTER ==== */
   footer {
-    margin-top: 64px;
+    margin-top: 80px;
     padding-top: 28px;
     border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
     font-family: "JetBrains Mono", monospace;
     font-size: 11px;
     letter-spacing: 0.16em;
@@ -133,74 +253,156 @@
   footer a:hover {
     text-decoration: underline;
   }
+  footer .right {
+    text-align: right;
+    color: var(--ink-mute);
+  }
+
+  /* Loading skeleton inside preview frames before iframe loads */
+  .preview-frame::before {
+    content: "loading preview…";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    background: linear-gradient(135deg, #1a1714 0%, #2a221b 50%, #1a1714 100%);
+  }
+  .preview-frame.loaded::before { display: none; }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    header {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    h1 { font-size: 36px; }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    footer .right {
+      text-align: left;
+    }
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="kicker">Newhomes OceanPark · Facebook Cover Designer</div>
-      <h1>Bộ <em>cover fanpage</em> theo brand Newhomes OceanPark.</h1>
-      <p class="lede">
-        6 phương án thiết kế cover Facebook (1247 × 466) sẵn sàng để upload background tuỳ ý + export PNG @1x/@3x.
-        Mỗi cover có toolbar riêng: <strong>Upload background</strong> · <strong>Clear background</strong> · <strong>Download PNG</strong>.
-        Background lưu trong localStorage trình duyệt — reload không mất.
-      </p>
+      <div>
+        <div class="kicker">Newhomes OceanPark · Facebook Cover Designer</div>
+        <h1>Bộ <em>cover fanpage</em><br/>theo brand Newhomes OceanPark.</h1>
+        <p class="lede">
+          6 phương án thiết kế cover Facebook (1247 × 466) sẵn để upload background tuỳ ý + export PNG @1x/@3x.
+          Background lưu vào localStorage trình duyệt — reload không mất.
+        </p>
+      </div>
+      <div class="quickstart">
+        <div><span class="step-num">1.</span><strong>Click</strong> 1 cover bên dưới để mở</div>
+        <div><span class="step-num">2.</span><strong>Upload background</strong> ảnh nội thất từ máy</div>
+        <div><span class="step-num">3.</span><strong>Download PNG</strong> rồi up lên Fanpage</div>
+      </div>
     </header>
 
-    <h2>6 phương án cover</h2>
-    <div class="grid">
-      <a class="card" href="split-covers/cover-01-portrait-split.html">
-        <div class="num">N° 01</div>
-        <div class="title">Portrait Split</div>
-        <div class="desc">Khối tối bên trái (brand + headline + hotline) — ảnh nội thất bên phải. Hiện đại, contrast cao.</div>
-        <div class="meta">DARK · ASYMMETRIC</div>
-      </a>
-      <a class="card" href="split-covers/cover-02-centered-editorial.html">
-        <div class="num">N° 02</div>
-        <div class="title">Centered Editorial</div>
-        <div class="desc">Bố cục giữa, ornament line cổ điển, headline lớn — phong cách tạp chí kiến trúc.</div>
-        <div class="meta">EDITORIAL · CENTERED</div>
-      </a>
-      <a class="card" href="split-covers/cover-03-architectural-grid.html">
-        <div class="num">N° 03</div>
-        <div class="title">Architectural Grid</div>
-        <div class="desc">Tối, kỹ thuật. Có corner mark + grid overlay + USP row. Cảm giác workshop chuyên nghiệp.</div>
-        <div class="meta">DARK · TECHNICAL</div>
-      </a>
-      <a class="card" href="split-covers/cover-04-quiet-glass.html">
-        <div class="num">N° 04</div>
-        <div class="title">Quiet Glass</div>
-        <div class="desc">Sáng, thanh lịch. Card kính bên trái + ảnh nền nội thất quiet luxury.</div>
-        <div class="meta">LIGHT · QUIET LUXURY</div>
-      </a>
-      <a class="card" href="split-covers/cover-05-banner-hotline.html">
-        <div class="num">N° 05</div>
-        <div class="title">Banner Hotline</div>
-        <div class="desc">Hotline làm focal point — số điện thoại to giữa banner. Dễ đọc trên feed.</div>
-        <div class="meta">DARK · HOTLINE FOCUS</div>
-      </a>
-      <a class="card" href="split-covers/cover-06-magazine-light.html">
-        <div class="num">N° 06</div>
-        <div class="title">Magazine Light</div>
-        <div class="desc">2 cột — bên trái thông tin trên nền kem, bên phải ảnh render. Đậm chất tạp chí.</div>
-        <div class="meta">LIGHT · 2-COLUMN</div>
-      </a>
-    </div>
+    <h2>6 phương án cover <span class="count">· N° 01 → 06</span></h2>
+    <div class="grid" id="cover-grid"></div>
 
-    <h2>All-in-one preview</h2>
-    <div class="grid">
-      <a class="card" href="Facebook%20Cover%20-%20Oceanpark%20brand%20update.html">
-        <div class="num">PREVIEW</div>
-        <div class="title">All variants on one page</div>
-        <div class="desc">Trang gốc render cả 6 phương án trong 1 file để so sánh nhanh.</div>
-        <div class="meta">DESIGN CANVAS</div>
-      </a>
-    </div>
+    <h2>All-in-one design canvas</h2>
+    <div class="grid wide" id="canvas-grid"></div>
 
     <footer>
-      Repo · <a href="https://github.com/windlyu12/newhomes-fanpage-cover">github.com/windlyu12/newhomes-fanpage-cover</a><br/>
-      Newhomes OceanPark · Member of Newhomes Group
+      <div>
+        Repo · <a href="https://github.com/windlyu12/newhomes-fanpage-cover" target="_blank">github.com/windlyu12/newhomes-fanpage-cover</a>
+      </div>
+      <div class="right">
+        Newhomes OceanPark<br/>Member of Newhomes Group
+      </div>
     </footer>
   </div>
+
+<script>
+  const COVERS = [
+    { num: "01", title: "Portrait Split",        desc: "Khối tối bên trái (brand · headline · hotline) — ảnh nội thất bên phải. Hiện đại, contrast cao.", tag: "DARK · ASYMMETRIC", file: "split-covers/cover-01-portrait-split.html" },
+    { num: "02", title: "Centered Editorial",    desc: "Bố cục giữa, ornament line cổ điển, headline lớn. Phong cách tạp chí kiến trúc.",                tag: "EDITORIAL · CENTERED", file: "split-covers/cover-02-centered-editorial.html" },
+    { num: "03", title: "Architectural Grid",    desc: "Tối, kỹ thuật. Corner mark + grid overlay + USP row. Cảm giác workshop chuyên nghiệp.",          tag: "DARK · TECHNICAL", file: "split-covers/cover-03-architectural-grid.html" },
+    { num: "04", title: "Quiet Glass",           desc: "Sáng, thanh lịch. Card kính trái + ảnh nền nội thất quiet luxury.",                              tag: "LIGHT · QUIET LUXURY", file: "split-covers/cover-04-quiet-glass.html" },
+    { num: "05", title: "Banner Hotline",        desc: "Hotline làm focal point — số điện thoại to giữa banner. Dễ đọc trên feed.",                     tag: "DARK · HOTLINE FOCUS", file: "split-covers/cover-05-banner-hotline.html" },
+    { num: "06", title: "Magazine Light",        desc: "2 cột — bên trái thông tin trên nền kem, bên phải ảnh render. Đậm chất tạp chí.",               tag: "LIGHT · 2-COLUMN", file: "split-covers/cover-06-magazine-light.html" },
+  ];
+
+  const CANVAS = {
+    title: "All variants on one page",
+    desc: "Trang gốc render cả 6 phương án trong 1 file để so sánh nhanh side-by-side.",
+    tag: "DESIGN CANVAS",
+    file: "Facebook Cover - Oceanpark brand update.html",
+  };
+
+  function buildCard(c, opts = {}) {
+    const a = document.createElement('a');
+    a.className = 'card' + (opts.canvas ? ' canvas' : '');
+    a.href = c.file;
+    a.target = '_blank';
+    a.rel = 'noopener';
+
+    const frame = document.createElement('div');
+    frame.className = 'preview-frame';
+
+    const badge = document.createElement('div');
+    badge.className = 'preview-badge';
+    badge.textContent = 'open ↗';
+    frame.appendChild(badge);
+
+    const iframe = document.createElement('iframe');
+    iframe.loading = 'lazy';
+    iframe.src = encodeURI(c.file) + '?embed=1';
+    iframe.title = c.title + ' preview';
+    iframe.addEventListener('load', () => frame.classList.add('loaded'));
+    frame.appendChild(iframe);
+
+    const body = document.createElement('div');
+    body.className = 'card-body';
+    body.innerHTML = `
+      <div class="card-head">
+        <div class="num">N° ${c.num || '—'}</div>
+        <div class="meta-tag">${c.tag}</div>
+      </div>
+      <div class="title">${c.title}</div>
+      <div class="desc">${c.desc}</div>
+    `;
+
+    a.appendChild(frame);
+    a.appendChild(body);
+    return a;
+  }
+
+  const coverGrid = document.getElementById('cover-grid');
+  COVERS.forEach((c) => coverGrid.appendChild(buildCard(c)));
+
+  const canvasGrid = document.getElementById('canvas-grid');
+  canvasGrid.appendChild(buildCard(CANVAS, { canvas: true }));
+
+  // Compute scale to fit each iframe (1247 wide native) inside its container.
+  function fitPreviews() {
+    document.querySelectorAll('.preview-frame').forEach((frame) => {
+      const w = frame.clientWidth;
+      const scale = w / 1247;
+      const iframe = frame.querySelector('iframe');
+      if (iframe) iframe.style.transform = `scale(${scale})`;
+    });
+  }
+  window.addEventListener('load', fitPreviews);
+  window.addEventListener('resize', fitPreviews);
+  // Initial run after layout
+  requestAnimationFrame(fitPreviews);
+</script>
 </body>
 </html>

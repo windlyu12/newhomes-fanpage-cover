@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newhomes OceanPark — Facebook Cover Variations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ==== Newhomes design tokens ==== */
+  :root {
+    --bg: #F6F1E7;
+    --bg-alt: #EFE7D6;
+    --bg-deep: #1A1714;
+    --card: #FAF5EA;
+    --ink: #1A1714;
+    --ink-soft: #5A5248;
+    --ink-mute: #8B8377;
+    --gold: #8A6A2B;
+    --gold-warm: #B8935A;
+    --gold-pale: #D9C28D;
+    --rule: rgba(26, 23, 20, 0.14);
+    --rule-strong: rgba(26, 23, 20, 0.28);
+
+    --f-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+    --f-italic: "Cormorant Garamond", Georgia, serif;
+    --f-sans: "Inter", "Be Vietnam Pro", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1A1714;
+    font-family: var(--f-sans);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* Canvas chrome */
+  .canvas-info {
+    color: rgba(246, 241, 231, 0.66);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 8px 0 4px;
+  }
+
+  /* ==== FB COVER frame ====
+     Design size 1247 × 466. Canvas renders at native size for PNG export.
+     We render via DCArtboard at native size; canvas handles zoom-to-fit.
+  */
+  .fb-cover {
+    width: 1247px;
+    height: 466px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-deep);
+    color: #FFFFFF;
+    font-family: var(--f-sans);
+  }
+
+  .fb-cover * { box-sizing: border-box; }
+
+  .cover-original {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1640px;
+    height: 664px;
+    overflow: hidden;
+    background: var(--bg-deep);
+    color: #FFFFFF;
+    font-family: var(--f-sans);
+    transform: scale(0.7603658537, 0.7018072289);
+    transform-origin: top left;
+  }
+
+  /* Mobile safe zone overlay (centered ~820×360 visible on mobile) */
+  .safe-zone {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    display: none; /* toggle via tweak later if needed */
+  }
+  .safe-zone::before {
+    content: "";
+    position: absolute;
+    left: calc(50% - 410px);
+    top: calc(50% - 180px);
+    width: 820px;
+    height: 360px;
+    border: 1px dashed rgba(217, 194, 141, 0.5);
+  }
+
+  /* Photo placeholders (interior renders) — style per variant */
+  .photo-bg {
+    position: absolute;
+    inset: 0;
+    background: #2a221b;
+  }
+
+  /* Editorial light interior — warm cream + walnut */
+  .photo-bg.editorial {
+    background:
+      radial-gradient(ellipse 50% 65% at 78% 25%, rgba(255, 235, 195, 0.42), transparent 65%),
+      radial-gradient(ellipse 90% 35% at 50% 95%, rgba(40, 28, 18, 0.55), transparent 75%),
+      linear-gradient(160deg, #c9b48e 0%, #a98c64 30%, #6e5238 60%, #3a2a1c 100%);
+  }
+  .photo-bg.editorial::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(110deg, transparent 50%, rgba(255, 240, 210, 0.30) 62%, rgba(255, 240, 210, 0.08) 70%, transparent 80%),
+      radial-gradient(ellipse 30% 14% at 35% 70%, rgba(232, 210, 175, 0.45), transparent 65%),
+      radial-gradient(ellipse 36% 12% at 35% 60%, rgba(80, 55, 35, 0.35), transparent 70%),
+      radial-gradient(ellipse 22% 9% at 60% 82%, rgba(20, 14, 10, 0.55), transparent 70%);
+  }
+  .photo-bg.editorial::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 12%, rgba(255, 235, 195, 0.06) 12% 12.4%) right top / 35% 60% no-repeat,
+      repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px);
+    mix-blend-mode: overlay;
+  }
+
+  /* Dark Atelier interior — moody walnut + accent lights */
+  .photo-bg.dark {
+    background:
+      radial-gradient(ellipse 22% 18% at 28% 22%, rgba(220, 175, 120, 0.40), transparent 70%),
+      radial-gradient(ellipse 22% 18% at 60% 22%, rgba(220, 175, 120, 0.32), transparent 70%),
+      radial-gradient(ellipse 22% 18% at 88% 22%, rgba(220, 175, 120, 0.28), transparent 70%),
+      linear-gradient(180deg, #14110d 0%, #2a1f17 35%, #4f3725 65%, #2a1d14 100%);
+  }
+  .photo-bg.dark::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, transparent 60%, rgba(120, 88, 55, 0.32) 65%, rgba(80, 58, 38, 0.5) 100%),
+      repeating-linear-gradient(90deg, rgba(220, 175, 120, 0.04) 0 1px, transparent 1px 8mm);
+  }
+
+  /* Quiet luxury — soft cream + light oak */
+  .photo-bg.quiet {
+    background:
+      radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255, 250, 235, 0.6), transparent 70%),
+      linear-gradient(165deg, #f4ecd9 0%, #e0d2b3 35%, #c4ae84 65%, #9b8460 100%);
+  }
+  .photo-bg.quiet::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, transparent 60%, rgba(140, 105, 70, 0.20) 64%),
+      radial-gradient(ellipse 22% 35% at 78% 50%, rgba(220, 190, 145, 0.30), transparent 65%);
+  }
+
+  /* Vignette overlay */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .vignette.editorial { background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.0) 35%, rgba(0,0,0,0.0) 60%, rgba(0,0,0,0.55) 100%); }
+  .vignette.dark { background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.55) 100%); }
+  .vignette.quiet { background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%); }
+  .vignette.left-fade-dark { background: linear-gradient(90deg, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.7) 28%, rgba(10,8,6,0.25) 50%, transparent 70%); }
+  .vignette.left-fade-light { background: linear-gradient(90deg, rgba(246,241,231,0.96) 0%, rgba(246,241,231,0.85) 30%, rgba(246,241,231,0.10) 55%, transparent 75%); }
+  .vignette.right-fade-dark { background: linear-gradient(270deg, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.65) 28%, rgba(10,8,6,0.20) 50%, transparent 70%); }
+  .vignette.center-darken { background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 40%, rgba(0,0,0,0.0) 75%); }
+
+  /* ====================== TYPOGRAPHY UTILITIES ====================== */
+  .display { font-family: var(--f-display); font-weight: 300; letter-spacing: -0.02em; line-height: 1.0; }
+  .display em { font-style: italic; font-family: var(--f-italic); font-weight: 400; }
+  .smallcaps {
+    font-family: var(--f-sans);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .mono {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+  .gold { color: var(--gold); }
+  .gold-pale { color: var(--gold-pale); }
+  .ink { color: var(--ink); }
+  .ink-soft { color: var(--ink-soft); }
+
+  /* ====================== TOP STRIP MASTHEAD ====================== */
+  .top-strip {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 5;
+    padding: 22px 56px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(2px);
+  }
+  .top-strip.light {
+    border-bottom-color: rgba(26, 23, 20, 0.10);
+  }
+  .top-strip .branch-list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--f-sans);
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .top-strip.light .branch-list { color: rgba(26, 23, 20, 0.78); }
+  .top-strip .branch-list .pin {
+    color: var(--gold-pale);
+    margin-right: 8px;
+  }
+  .top-strip.light .branch-list .pin { color: var(--gold); }
+  .top-strip .branch-list .sep {
+    color: var(--gold-pale);
+    margin: 0 14px;
+    opacity: 0.75;
+  }
+  .top-strip.light .branch-list .sep { color: var(--gold); opacity: 0.5; }
+  .top-strip .right {
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .top-strip.light .right { color: rgba(26, 23, 20, 0.66); }
+
+  /* ====================== BRAND LOCK-UP ====================== */
+  .brand-lock {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .brand-lock .nh-logo {
+    height: 56px;
+    width: auto;
+  }
+  .brand-lock .divider {
+    width: 1px;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.30);
+  }
+  .brand-lock.light .divider { background: rgba(26, 23, 20, 0.20); }
+  .brand-lock .word {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    line-height: 1;
+  }
+  .brand-lock .word .main {
+    font-family: var(--f-sans);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand-lock.light .word .main { color: var(--ink); }
+  .brand-lock .word .sub {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: var(--gold-pale);
+  }
+  .brand-lock.light .word .sub { color: var(--gold); }
+
+  /* ====================== HOTLINE TREATMENTS ====================== */
+  .hotline-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .hotline-block .label {
+    font-family: var(--f-sans);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+  }
+  .hotline-block.light .label { color: var(--gold); }
+  .hotline-block .number {
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    font-feature-settings: "tnum";
+  }
+  .hotline-block.light .number { color: var(--ink); }
+  .hotline-block .number .dash {
+    color: var(--gold-pale);
+    font-style: italic;
+    margin: 0 4px;
+  }
+  .hotline-block.light .number .dash { color: var(--gold); }
+
+  /* ====================== FOOTER (4 branches + factory) ====================== */
+  .branch-strip {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    z-index: 5;
+    padding: 18px 56px 22px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px;
+    color: rgba(255, 255, 255, 0.80);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(180deg, rgba(10,8,6,0.0) 0%, rgba(10,8,6,0.55) 60%, rgba(10,8,6,0.78) 100%);
+  }
+  .branch-strip.light {
+    color: rgba(26, 23, 20, 0.78);
+    border-top-color: rgba(26, 23, 20, 0.12);
+    background: linear-gradient(180deg, rgba(246,241,231,0) 0%, rgba(246,241,231,0.5) 50%, rgba(246,241,231,0.85) 100%);
+  }
+  .branch-strip .item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .branch-strip .item .tag {
+    font-family: var(--f-sans);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+  }
+  .branch-strip.light .item .tag { color: var(--gold); }
+  .branch-strip .item .addr {
+    font-family: var(--f-sans);
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+  .branch-strip .item .addr .featured {
+    font-family: var(--f-italic);
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+  .branch-strip.light .item .addr .featured { color: var(--gold); }
+
+  /* ====================== HEADLINE BLOCK ====================== */
+  .headline-stack {
+    position: absolute;
+    z-index: 4;
+    color: #FFFFFF;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.40);
+  }
+  .headline-stack.light { color: var(--ink); text-shadow: none; }
+
+  .headline-stack .kicker {
+    font-family: var(--f-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    margin-bottom: 18px;
+  }
+  .headline-stack.light .kicker { color: var(--gold); }
+
+  .headline-stack h1 {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 720px;
+  }
+  .headline-stack h1 em {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold-pale);
+  }
+  .headline-stack.light h1 em { color: var(--gold); }
+
+  .headline-stack .tagline {
+    margin-top: 18px;
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 560px;
+    padding-left: 16px;
+    border-left: 2px solid var(--gold-pale);
+  }
+  .headline-stack.light .tagline {
+    color: var(--ink-soft);
+    border-left-color: var(--gold);
+  }
+
+  /* ====================== USP CHIPS ====================== */
+  .usp-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+  .usp {
+    padding: 8px 16px;
+    border: 1px solid rgba(217, 194, 141, 0.55);
+    border-radius: 9999px;
+    font-family: var(--f-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(20, 18, 16, 0.35);
+    backdrop-filter: blur(6px);
+  }
+  .usp.light {
+    color: var(--gold);
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(138, 106, 43, 0.35);
+  }
+
+  /* ====================== HELPER: rule line ====================== */
+  .rule-h {
+    width: 60px;
+    height: 1px;
+    background: var(--gold-pale);
+    margin: 14px 0;
+  }
+  .rule-h.light { background: var(--gold); }
+
+  /* ====================== V1 PORTRAIT-SPLIT layout ====================== */
+  .v1 .left-pane {
+    position: absolute;
+    top: 0; left: 0;
+    width: 56%;
+    height: 100%;
+    background: #14110d;
+    z-index: 3;
+    padding: 80px 72px 100px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .v1 .right-pane {
+    position: absolute;
+    top: 0; right: 0;
+    width: 48%;
+    height: 100%;
+    z-index: 2;
+    overflow: hidden;
+  }
+  .v1 .right-pane::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 65% at 60% 30%, rgba(255, 220, 170, 0.40), transparent 65%),
+      linear-gradient(165deg, #2a1f17 0%, #5a4330 35%, #8b6d4b 60%, #4f3a28 90%, #1a1410 100%);
+  }
+  .v1 .right-pane::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(20, 17, 13, 0.92) 0%, rgba(20, 17, 13, 0.40) 14%, transparent 28%);
+  }
+
+  /* ====================== V2 CENTERED EDITORIAL ====================== */
+  .v2 .photo-bg.editorial {
+    background:
+      radial-gradient(ellipse 80% 80% at 50% 60%, rgba(255, 240, 215, 0.30), transparent 70%),
+      linear-gradient(180deg, #d8c69e 0%, #b39668 35%, #6e5238 70%, #2d2018 100%);
+  }
+  .v2 .center-content {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 80px 110px;
+  }
+  .v2 .ornament {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--gold-pale);
+    margin-bottom: 26px;
+  }
+  .v2 .ornament .line {
+    width: 80px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .v2 .ornament .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    transform: rotate(45deg);
+  }
+
+  /* ====================== V3 ARCHITECTURAL GRID ====================== */
+  .v3 .photo-bg {
+    background:
+      radial-gradient(ellipse 35% 50% at 25% 35%, rgba(255, 230, 185, 0.35), transparent 70%),
+      linear-gradient(160deg, #1a1510 0%, #3a2a1c 30%, #6e5238 55%, #2a1f15 90%, #0e0a07 100%);
+  }
+  .v3 .grid-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background-image:
+      linear-gradient(90deg, rgba(217, 194, 141, 0.07) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(217, 194, 141, 0.07) 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: -1px -1px;
+  }
+  .v3 .corner-mark {
+    position: absolute;
+    width: 26px; height: 26px;
+    border: 1.5px solid var(--gold-pale);
+    z-index: 3;
+  }
+  .v3 .corner-mark.tl { top: 56px; left: 56px; border-right: 0; border-bottom: 0; }
+  .v3 .corner-mark.tr { top: 56px; right: 56px; border-left: 0; border-bottom: 0; }
+  .v3 .corner-mark.bl { bottom: 56px; left: 56px; border-right: 0; border-top: 0; }
+  .v3 .corner-mark.br { bottom: 56px; right: 56px; border-left: 0; border-top: 0; }
+  .v3 .index-tag {
+    position: absolute;
+    top: 56px; right: 100px;
+    z-index: 5;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--gold-pale);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ====================== V4 LIGHT QUIET ====================== */
+  .v4 .photo-bg.quiet {
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 35%, rgba(255, 250, 235, 0.7), transparent 70%),
+      linear-gradient(165deg, #fbfaf6 0%, #f0e8d4 30%, #d4c4a0 60%, #a98c64 100%);
+  }
+  .v4 .left-card {
+    position: absolute;
+    top: 80px; bottom: 80px;
+    left: 80px;
+    width: 580px;
+    z-index: 4;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(138, 106, 43, 0.18);
+    box-shadow: 0 24px 60px rgba(26, 23, 20, 0.10);
+    padding: 50px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* ====================== V5 HORIZONTAL BANNER ====================== */
+  .v5 .photo-bg {
+    background:
+      radial-gradient(ellipse 60% 70% at 75% 40%, rgba(255, 220, 170, 0.40), transparent 65%),
+      linear-gradient(165deg, #2a1d14 0%, #5a4330 35%, #8b6d4b 65%, #3a281b 100%);
+  }
+  .v5 .banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  .v5 .banner-mid {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr 0.9fr;
+    align-items: center;
+    padding: 0 80px;
+    gap: 60px;
+  }
+  .v5 .banner-mid .center {
+    text-align: center;
+  }
+  .v5 .banner-mid .center .display {
+    font-size: 76px;
+    line-height: 1;
+    color: #FFFFFF;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+  }
+  .v5 .banner-mid .center .display em {
+    color: var(--gold-pale);
+  }
+  .v5 .vert-rule {
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--gold-pale) 30%, var(--gold-pale) 70%, transparent);
+    height: 70%;
+    align-self: center;
+    justify-self: center;
+  }
+
+  /* ====================== V6 EDITORIAL MAGAZINE LIGHT ====================== */
+  .v6 {
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .v6 .layout {
+    position: absolute; inset: 0;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 0;
+  }
+  .v6 .left {
+    padding: 70px 64px 90px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg);
+  }
+  .v6 .right {
+    position: relative;
+    overflow: hidden;
+  }
+  .v6 .right .photo-bg.editorial {
+    background:
+      radial-gradient(ellipse 50% 60% at 50% 30%, rgba(255, 235, 195, 0.45), transparent 65%),
+      linear-gradient(165deg, #c9b48e 0%, #a98c64 30%, #6e5238 60%, #2d2018 100%);
+  }
+  .v6 .right .image-label {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    z-index: 3;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: rgba(250, 245, 234, 0.65);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ====================== Common: SVG icon styles for branch pins ====================== */
+  .pin-svg {
+    width: 11px;
+    height: 11px;
+    display: inline-block;
+    vertical-align: -1px;
+  }
+
+  /* ====================== Print/Screenshot: hide canvas chrome ====================== */
+  body.export .dc-toolbar { display: none !important; }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<!-- Reusable SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="pin-icon" viewBox="0 0 24 24">
+      <path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="phone-icon" viewBox="0 0 24 24">
+      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A15 15 0 013 6a2 2 0 012-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="factory-icon" viewBox="0 0 24 24">
+      <path d="M3 20V11l5 3V11l5 3V11l5 3V8l3-2v14H3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+const COVER_WIDTH = 1247;
+const COVER_HEIGHT = 466;
+
+/* ====== Shared sub-components ====== */
+const LOGO_BLACK = "assets/logo-newhomes-black.png";
+const LOGO_WHITE = "assets/logo-newhomes-white.png";
+
+function NHLogo({ src, light = false, height = 56 }) {
+  const finalSrc = src || (light ? LOGO_BLACK : LOGO_WHITE);
+  return (
+    <img
+      className="nh-logo"
+      src={finalSrc}
+      alt="Newhomes"
+      style={{
+        height: `${height}px`,
+        width: "auto",
+      }}
+    />
+  );
+}
+
+function BrandLock({ light = false, sub = "Member of Newhomes Group", logoHeight = 56 }) {
+  return (
+    <div className={`brand-lock ${light ? "light" : ""}`}>
+      <NHLogo light={light} height={logoHeight} />
+      <div className="divider"></div>
+      <div className="word">
+        <div className="main">Newhomes <span className={light ? "gold" : "gold-pale"}>OceanPark</span></div>
+        <div className="sub">{sub}</div>
+      </div>
+    </div>
+  );
+}
+
+function Hotline({ light = false, label = "Hotline / Zalo", number = "0395 959 878" }) {
+  return (
+    <div className={`hotline-block ${light ? "light" : ""}`}>
+      <div className="label">{label}</div>
+      <div className="number mono" style={{ fontFamily: "var(--f-display)" }}>
+        {number}
+      </div>
+    </div>
+  );
+}
+
+const BRANCH_ITEMS = [
+  { tag: "CN 1", address: "ZR2, Vinhomes Ocean Park, Gia Lâm, Hà Nội", icon: "pin-icon" },
+  { tag: "CN 2", address: "GS5, Smart City, Tây Mỗ, Hà Nội", icon: "pin-icon" },
+  { tag: "CN 3", address: "Phú Lộc, Tuệ Tĩnh, Hải Phòng", icon: "pin-icon" },
+  { tag: "CN 4", address: "Khoái Châu, Hưng Yên", icon: "pin-icon" },
+  { tag: "Nhà máy", address: "Cần Kiệm, Thạch Thất, Hà Nội", icon: "factory-icon" },
+];
+
+function BranchStrip({ light = false, style }) {
+  return (
+    <div className={`branch-strip ${light ? "light" : ""}`} style={style}>
+      {BRANCH_ITEMS.map((branch) => (
+        <div className="item" key={branch.tag}>
+          <div className="tag">
+            <svg className="pin-svg" style={{ marginRight: 6 }}><use href={`#${branch.icon}`}/></svg>
+            {branch.tag}
+          </div>
+          <div className="addr">{branch.address}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ====== Variation 1 — Portrait split (dark left, photo right) ====== */
+function CoverV1() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v1">
+      <div className="left-pane">
+        <BrandLock light={false} logoHeight={64} />
+
+        <div>
+          <div className="headline-stack" style={{ position: "static", textShadow: "none" }}>
+            <div className="kicker">Thiết kế &amp; thi công nội thất</div>
+            <h1 className="display">
+              Một tổ ấm đẹp,<br/>bắt đầu từ những<br/>điều <em>rõ ràng</em>.
+            </h1>
+            <div className="tagline" style={{ marginTop: 20 }}>
+              Trọn gói nội thất cho gia đình mới tại Ocean Park, Ecopark, Gia Lâm &amp; Long Biên.
+            </div>
+          </div>
+        </div>
+
+        <Hotline light={false} />
+      </div>
+      <div className="right-pane"></div>
+      <BranchStrip style={{ background: "linear-gradient(180deg, transparent 0%, rgba(10,8,6,0.78) 100%)" }} />
+      </div>
+    </div>
+  );
+}
+
+/* ====== Variation 2 — Centered editorial (cover-bg-editorial vibe) ====== */
+function CoverV2() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v2">
+      <div className="photo-bg editorial"></div>
+      <div className="vignette center-darken"></div>
+      <div className="vignette editorial"></div>
+
+      <div className="top-strip">
+        <div className="branch-list">
+          <span className="pin">◆</span>OCEAN PARK
+          <span className="sep">·</span>ECOPARK
+          <span className="sep">·</span>LONG BIÊN
+          <span className="sep">·</span>GIA LÂM
+        </div>
+        <div className="right">noithatoceanpark.com</div>
+      </div>
+
+      <div className="center-content">
+        <div className="ornament">
+          <span className="line"></span>
+          <span className="smallcaps" style={{ fontSize: 11, color: "var(--gold-pale)" }}>Newhomes OceanPark · Member of Newhomes Group</span>
+          <span className="line"></span>
+        </div>
+        <NHLogo light={false} height={84} />
+        <h1 className="display" style={{ fontSize: 78, marginTop: 30, color: "#fff", textAlign: "center", maxWidth: 1100 }}>
+          Thiết kế &amp; thi công <em>trọn gói</em><br/>
+          cho tổ ấm Ocean Park.
+        </h1>
+        <Hotline light={false} label="Tư vấn miễn phí · Zalo / Hotline" />
+      </div>
+
+      <BranchStrip />
+      </div>
+    </div>
+  );
+}
+
+/* ====== Variation 3 — Architectural grid (dark, technical) ====== */
+function CoverV3() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v3">
+      <div className="photo-bg dark"></div>
+      <div className="vignette dark"></div>
+      <div className="grid-overlay"></div>
+
+      <div className="corner-mark tl"></div>
+      <div className="corner-mark tr"></div>
+      <div className="corner-mark bl"></div>
+      <div className="corner-mark br"></div>
+
+      <div className="index-tag">N° 02 · OCEAN PARK · EST. CN</div>
+
+      <div className="top-strip" style={{ borderBottom: "0", padding: "44px 88px 0" }}>
+        <BrandLock light={false} logoHeight={48} />
+        <div className="right" style={{ fontFamily: "var(--f-mono)", fontSize: 11, color: "var(--gold-pale)" }}>
+          INTERIOR · DESIGN · BUILD
+        </div>
+      </div>
+
+      <div className="headline-stack" style={{ left: 88, top: 230, maxWidth: 980 }}>
+        <div className="kicker">Member of Newhomes Group</div>
+        <h1 className="display" style={{ fontSize: 80 }}>
+          Nội thất <em>trọn gói</em><br/>
+          cho căn hộ Ocean Park.
+        </h1>
+        <div className="tagline">
+          Xưởng riêng · Showroom ZR2 · Đội thi công am hiểu OCP 1/2/3.
+        </div>
+
+        <div className="usp-row">
+          <div className="usp">Bảo hành 2 năm</div>
+          <div className="usp">Cam kết tiến độ</div>
+          <div className="usp">Báo giá minh bạch</div>
+          <div className="usp">Vật liệu chuẩn</div>
+        </div>
+      </div>
+
+      <div style={{ position: "absolute", right: 88, bottom: 110, zIndex: 5, textAlign: "right" }}>
+        <Hotline light={false} label="Hotline · Zalo" />
+      </div>
+
+      <BranchStrip />
+      </div>
+    </div>
+  );
+}
+
+/* ====== Variation 4 — Light quiet luxury, glass card ====== */
+function CoverV4() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v4">
+      <div className="photo-bg quiet"></div>
+      <div className="vignette quiet"></div>
+
+      <div className="left-card">
+        <div>
+          <BrandLock light={true} logoHeight={56} />
+          <div className="rule-h light" style={{ marginTop: 28 }}></div>
+        </div>
+
+        <div className="headline-stack light" style={{ position: "static" }}>
+          <div className="kicker">Thiết kế &amp; thi công nội thất</div>
+          <h1 className="display" style={{ fontSize: 56 }}>
+            Tổ ấm <em>tinh tế</em><br/>cho gia đình<br/>Ocean Park.
+          </h1>
+          <div className="tagline">
+            Phục vụ Ocean Park, Ecopark, Long Biên &amp; Gia Lâm.
+          </div>
+        </div>
+
+        <Hotline light={true} />
+      </div>
+
+      <div style={{ position: "absolute", right: 80, top: 80, zIndex: 4, textAlign: "right" }}>
+        <div className="smallcaps" style={{ fontSize: 11, color: "var(--gold)", letterSpacing: "0.32em" }}>
+          Catalogue · 2026
+        </div>
+        <div style={{ marginTop: 8, fontFamily: "var(--f-mono)", fontSize: 11, color: "var(--ink-soft)", letterSpacing: "0.14em" }}>
+          NOITHATOCEANPARK.COM
+        </div>
+      </div>
+
+      <BranchStrip light={true} />
+      </div>
+    </div>
+  );
+}
+
+/* ====== Variation 5 — Symmetric banner: hotline focal ====== */
+function CoverV5() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v5">
+      <div className="photo-bg"></div>
+      <div className="vignette dark"></div>
+      <div className="vignette center-darken"></div>
+
+      <div className="top-strip">
+        <BrandLock light={false} logoHeight={48} />
+        <div className="right" style={{ fontFamily: "var(--f-mono)", fontSize: 11 }}>
+          OCEAN PARK · ECOPARK · LONG BIÊN · GIA LÂM
+        </div>
+      </div>
+
+      <div className="banner-overlay">
+        <div></div>
+        <div className="banner-mid">
+          <div style={{ textAlign: "right" }}>
+            <div className="smallcaps" style={{ fontSize: 11, color: "var(--gold-pale)", letterSpacing: "0.32em" }}>
+              Thiết kế &amp; Thi công
+            </div>
+            <h2 className="display" style={{ fontSize: 36, color: "#fff", marginTop: 14, lineHeight: 1.1 }}>
+              Nội thất trọn gói<br/><em style={{ color: "var(--gold-pale)" }}>tại Ocean Park</em>
+            </h2>
+          </div>
+
+          <div className="center" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+            <div className="smallcaps" style={{ fontSize: 11, color: "var(--gold-pale)", letterSpacing: "0.40em" }}>
+              Hotline · Zalo
+            </div>
+            <div className="display" style={{ fontSize: 92, color: "#fff", lineHeight: 1, letterSpacing: "-0.01em" }}>
+              0395 <em style={{ color: "var(--gold-pale)" }}>959</em> 878
+            </div>
+            <div className="rule-h" style={{ background: "var(--gold-pale)" }}></div>
+            <div className="smallcaps" style={{ fontSize: 11, color: "rgba(255,255,255,0.78)", letterSpacing: "0.30em" }}>
+              Tư vấn miễn phí · Báo giá minh bạch
+            </div>
+          </div>
+
+          <div>
+            <div className="usp" style={{ marginBottom: 10, display: "block", textAlign: "center" }}>Bảo hành 2 năm</div>
+            <div className="usp" style={{ marginBottom: 10, display: "block", textAlign: "center" }}>Xưởng riêng</div>
+            <div className="usp" style={{ display: "block", textAlign: "center" }}>Cam kết tiến độ</div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+
+      <BranchStrip />
+      </div>
+    </div>
+  );
+}
+
+/* ====== Variation 6 — Editorial magazine (light) ====== */
+function CoverV6() {
+  return (
+    <div className="fb-cover">
+      <div className="cover-original v6">
+      <div className="layout">
+        <div className="left">
+          <div>
+            <BrandLock light={true} logoHeight={56} />
+          </div>
+
+          <div className="headline-stack light" style={{ position: "static" }}>
+            <div className="kicker" style={{ fontSize: 11, letterSpacing: "0.36em", color: "var(--gold)" }}>
+              Số 06 · Catalogue 2026 · Newhomes OceanPark
+            </div>
+            <h1 className="display" style={{ fontSize: 70, color: "var(--ink)" }}>
+              Một tổ ấm đẹp,<br/>bắt đầu từ những<br/>điều <em>rõ ràng</em>.
+            </h1>
+            <div className="tagline" style={{ color: "var(--ink-soft)", borderLeftColor: "var(--gold)" }}>
+              Newhomes — thiết kế &amp; thi công nội thất trọn gói<br/>
+              tại Ocean Park · Ecopark · Long Biên · Gia Lâm.
+            </div>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 24 }}>
+            <Hotline light={true} label="Hotline · Zalo" />
+            <div style={{ textAlign: "right", fontFamily: "var(--f-mono)", fontSize: 11, color: "var(--ink-soft)", letterSpacing: "0.14em", lineHeight: 1.6 }}>
+              <div style={{ color: "var(--gold)", letterSpacing: "0.32em", marginBottom: 4 }}>WEBSITE</div>
+              NOITHATOCEANPARK.COM<br/>
+              FB.COM/NEWHOMES.OCEANPARK
+            </div>
+          </div>
+        </div>
+
+        <div className="right">
+          <div className="photo-bg editorial"></div>
+          <div className="vignette" style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0) 60%)" }}></div>
+          <div className="image-label">Render · Modern Premium · OCP-2BR-A</div>
+          <div style={{ position: "absolute", left: 24, top: 24, zIndex: 3, fontFamily: "var(--f-mono)", fontSize: 10, color: "rgba(250,245,234,0.7)", letterSpacing: "0.16em", textTransform: "uppercase" }}>
+            Plate 06 / OCEAN PARK
+          </div>
+        </div>
+      </div>
+
+      <BranchStrip
+        light={true}
+        style={{
+          background: "transparent",
+          borderTop: "1px solid rgba(26,23,20,0.10)",
+          padding: "14px 80px 18px",
+        }}
+      />
+      </div>
+    </div>
+  );
+}
+
+/* ====== App: design canvas ====== */
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection
+        id="covers"
+        title="Cover Facebook · Newhomes OceanPark"
+        subtitle="1247×466px · Tối ưu export PNG · 6 phương án"
+      >
+        <DCArtboard id="v1-portrait-split" label="01 · Portrait Split — Dark editorial" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV1 />
+        </DCArtboard>
+        <DCArtboard id="v2-centered-editorial" label="02 · Centered Editorial — Logo-forward" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV2 />
+        </DCArtboard>
+        <DCArtboard id="v3-architectural-grid" label="03 · Architectural Grid — Technical" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV3 />
+        </DCArtboard>
+        <DCArtboard id="v4-quiet-glass" label="04 · Quiet Luxury — Glass card light" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV4 />
+        </DCArtboard>
+        <DCArtboard id="v5-banner-hotline" label="05 · Banner Symmetric — Hotline focal" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV5 />
+        </DCArtboard>
+        <DCArtboard id="v6-magazine-light" label="06 · Magazine Light — Editorial" width={COVER_WIDTH} height={COVER_HEIGHT}>
+          <CoverV6 />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+<div id="root"></div>
+
+</body>
+</html>
